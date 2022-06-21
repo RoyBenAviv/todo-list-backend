@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express'
 import path from 'path'
 import cors from 'cors'
-import { Cors } from './ts-models/cors.model'
+import { Cors } from './models/cors.model'
 
 const app: Application = express()
 const http = require('http').createServer(app)

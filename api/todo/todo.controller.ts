@@ -1,8 +1,11 @@
+import { Todo } from "../../models/todo.model";
+import { Request, Response } from "express";
 const todoService = require('./todo.services')
-async function getTodos(req, res): Promise<any> {
+
+
+async function getTodos(req: Request, res: Response): Promise<void> {
     try {
-        var queryParams = req.query;
-        const todos = await todoService.query(queryParams)
+        const todos: Todo[] = await todoService.query()
         res.json(todos);
       } catch (err) {
         console.error('Failed to get todos', err)
@@ -10,10 +13,10 @@ async function getTodos(req, res): Promise<any> {
       }
 }
 
-async function getTodoById(req, res) {
+async function getTodoById(req: Request, res: Response): Promise<void> {
   try {
-    const todoId = req.params.id;
-    const todo = await todoService.getById(todoId)
+    const todoId: string = req.params.id;
+    const todo: Todo = await todoService.getById(todoId)
     res.json(todo)
   } catch (err) {
     console.error('Failed to get todo', err)
@@ -21,10 +24,10 @@ async function getTodoById(req, res) {
   }
 }
 
-async function addTodo(req, res) {
+async function addTodo(req: Request, res: Response): Promise<void> {
   try {
-    const todo = req.body;
-    const addedTodo = await todoService.add(todo)
+    const todo: Todo = req.body;
+    const addedTodo: Todo = await todoService.add(todo)
     res.json(addedTodo)
   } catch (err) {
     console.error('Failed to add todo', err)
@@ -32,10 +35,10 @@ async function addTodo(req, res) {
   }
 }
 
-async function updateTodo(req, res) {
+async function updateTodo(req: Request, res: Response): Promise<void> {
   try {
-    const todo = req.body;
-    const updatedTodo = await todoService.update(todo)
+    const todo: Todo = req.body;
+    const updatedTodo: Todo = await todoService.update(todo)
     res.json(updatedTodo)
   } catch (err) {
     console.error('Failed to update todo', err)
@@ -44,10 +47,10 @@ async function updateTodo(req, res) {
   }
 }
 
-async function removeTodo(req, res) {
+async function removeTodo(req, res): Promise<void> {
   try {
-    const todoId = req.params.id;
-    const removedId = await todoService.remove(todoId)
+    const todoId: string = req.params.id;
+    const removedId: string = await todoService.remove(todoId)
     res.send(removedId)
   } catch (err) {
     console.error('Failed to remove todo', err)

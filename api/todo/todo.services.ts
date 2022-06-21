@@ -1,3 +1,5 @@
+import { Todo } from "../../models/todo.model"
+
 const dbService = require('../../services/db')
 const logger = require('../../services/logger')
 const {ObjectId} = require('mongodb')
@@ -5,7 +7,7 @@ const {ObjectId} = require('mongodb')
 async function query() {
     try {
         const collection = await dbService.getCollection('todo')
-        var todos = await collection.find().toArray()
+        var todos: Todo[] = await collection.find().toArray()
         return todos
     } catch (err) {
         logger.error('cannot find todos', err)
@@ -13,10 +15,10 @@ async function query() {
     }
 }
 
-async function getById(todoId) {
+async function getById(todoId: string) {
     try {
         const collection = await dbService.getCollection('todo')
-        const todo = collection.findOne({ '_id': ObjectId(todoId) })
+        const todo: Todo = collection.findOne({ '_id': ObjectId(todoId) })
         return todo
     } catch (err) {
         logger.error(`while finding todo ${todoId}`, err)
@@ -24,7 +26,7 @@ async function getById(todoId) {
     }
 }
 
-async function remove(todoId) {
+async function remove(todoId: string) {
     try {
         const collection = await dbService.getCollection('todo')
         await collection.deleteOne({ '_id': ObjectId(todoId) })
@@ -35,7 +37,7 @@ async function remove(todoId) {
     }
 }
 
-async function add(todo) {
+async function add(todo: Todo) {
     try {
         const collection = await dbService.getCollection('todo')
         const {ops} = await collection.insertOne(todo)
@@ -45,9 +47,9 @@ async function add(todo) {
         throw err
     }
 }
-async function update(todo) {
+async function update(todo: Todo) {
     try {
-        var id = ObjectId(todo._id)
+        var id: string = ObjectId(todo._id)
         delete todo._id
         const collection = await dbService.getCollection('todo')
         await collection.updateOne({ "_id": id }, { $set: { ...todo } })

@@ -1,6 +1,6 @@
-const { MongoClient } = require('mongodb')
+const  { MongoClient } = require('mongodb')
 
-const dbConfig: any = require('../config')
+const dbConfig = require('../config')
 
 module.exports = {
     getCollection
@@ -16,7 +16,7 @@ async function getCollection(collectionName): Promise<any> {
         const collection = await db.collection(collectionName)
         return collection
     } catch (err) {
-        logger.error('Failed to get Mongo collection', err)
+        console.error('Failed to get Mongo collection', err)
         throw err
     }
 }
@@ -29,7 +29,7 @@ async function connect(): Promise<any> {
         dbConn = db
         return db
     } catch (err) {
-        logger.error('Cannot Connect to DB', err)
+        console.error('Cannot Connect to DB', err)
         throw err
     }
 }
