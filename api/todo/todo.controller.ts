@@ -1,12 +1,11 @@
 const todoService = require('./todo.services')
-
 async function getTodos(req, res): Promise<any> {
     try {
         var queryParams = req.query;
         const todos = await todoService.query(queryParams)
         res.json(todos);
       } catch (err) {
-        logger.error('Failed to get todos', err)
+        console.error('Failed to get todos', err)
         res.status(500).send({ err: 'Failed to get todos' })
       }
 }
@@ -17,7 +16,7 @@ async function getTodoById(req, res) {
     const todo = await todoService.getById(todoId)
     res.json(todo)
   } catch (err) {
-    logger.error('Failed to get todo', err)
+    console.error('Failed to get todo', err)
     res.status(500).send({ err: 'Failed to get todo' })
   }
 }
@@ -28,7 +27,7 @@ async function addTodo(req, res) {
     const addedTodo = await todoService.add(todo)
     res.json(addedTodo)
   } catch (err) {
-    logger.error('Failed to add todo', err)
+    console.error('Failed to add todo', err)
     res.status(500).send({ err: 'Failed to add todo' })
   }
 }
@@ -39,7 +38,7 @@ async function updateTodo(req, res) {
     const updatedTodo = await todoService.update(todo)
     res.json(updatedTodo)
   } catch (err) {
-    logger.error('Failed to update todo', err)
+    console.error('Failed to update todo', err)
     res.status(500).send({ err: 'Failed to update todo' })
 
   }
@@ -51,7 +50,7 @@ async function removeTodo(req, res) {
     const removedId = await todoService.remove(todoId)
     res.send(removedId)
   } catch (err) {
-    logger.error('Failed to remove todo', err)
+    console.error('Failed to remove todo', err)
     res.status(500).send({ err: 'Failed to remove todo' })
   }
 }

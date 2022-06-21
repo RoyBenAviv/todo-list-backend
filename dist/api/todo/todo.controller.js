@@ -16,7 +16,7 @@ function getTodos(req, res) {
             res.json(todos);
         }
         catch (err) {
-            logger.error('Failed to get todos', err);
+            console.error('Failed to get todos', err);
             res.status(500).send({ err: 'Failed to get todos' });
         }
     });
@@ -29,7 +29,7 @@ function getTodoById(req, res) {
             res.json(todo);
         }
         catch (err) {
-            logger.error('Failed to get todo', err);
+            console.error('Failed to get todo', err);
             res.status(500).send({ err: 'Failed to get todo' });
         }
     });
@@ -42,7 +42,7 @@ function addTodo(req, res) {
             res.json(addedTodo);
         }
         catch (err) {
-            logger.error('Failed to add todo', err);
+            console.error('Failed to add todo', err);
             res.status(500).send({ err: 'Failed to add todo' });
         }
     });
@@ -55,7 +55,7 @@ function updateTodo(req, res) {
             res.json(updatedTodo);
         }
         catch (err) {
-            logger.error('Failed to update todo', err);
+            console.error('Failed to update todo', err);
             res.status(500).send({ err: 'Failed to update todo' });
         }
     });
@@ -68,7 +68,7 @@ function removeTodo(req, res) {
             res.send(removedId);
         }
         catch (err) {
-            logger.error('Failed to remove todo', err);
+            console.error('Failed to remove todo', err);
             res.status(500).send({ err: 'Failed to remove todo' });
         }
     });

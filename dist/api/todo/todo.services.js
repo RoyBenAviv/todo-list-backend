@@ -23,6 +23,65 @@ function query() {
         }
     });
 }
+function getById(todoId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const collection = yield dbService.getCollection('todo');
+            const todo = collection.findOne({ '_id': ObjectId(todoId) });
+            return todo;
+        }
+        catch (err) {
+            logger.error(`while finding todo ${todoId}`, err);
+            throw err;
+        }
+    });
+}
+function remove(todoId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const collection = yield dbService.getCollection('todo');
+            yield collection.deleteOne({ '_id': ObjectId(todoId) });
+            return todoId;
+        }
+        catch (err) {
+            logger.error(`cannot remove todo ${todoId}`, err);
+            throw err;
+        }
+    });
+}
+function add(todo) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const collection = yield dbService.getCollection('todo');
+            const { ops } = yield collection.insertOne(todo);
+            return ops[0];
+        }
+        catch (err) {
+            logger.error('cannot insert todo', err);
+            throw err;
+        }
+    });
+}
+function update(todo) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            var id = ObjectId(todo._id);
+            delete todo._id;
+            const collection = yield dbService.getCollection('todo');
+            yield collection.updateOne({ "_id": id }, { $set: Object.assign({}, todo) });
+            todo._id = id;
+            return todo;
+        }
+        catch (err) {
+            logger.error(`cannot update todo`, err);
+            throw err;
+        }
+    });
+}
 module.exports = {
     query,
+    getById,
+    add,
+    update,
+    remove
 };
