@@ -4,6 +4,7 @@ const dbService = require('../../services/db')
 const logger = require('../../services/logger')
 const {ObjectId} = require('mongodb')
 
+
 async function query() {
     try {
         const collection = await dbService.getCollection('todo')
