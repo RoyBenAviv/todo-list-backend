@@ -39,6 +39,8 @@ function addTodo(req, res) {
         try {
             const todo = req.body;
             const addedTodo = yield todoService.add(todo);
+            console.log(todo);
+            console.log(addedTodo);
             res.json(addedTodo);
         }
         catch (err) {
