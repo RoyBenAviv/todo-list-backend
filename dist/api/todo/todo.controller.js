@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const todoService = require('./todo.servicets');
+const todoService = require('./todo.services');
 function getTodos(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -21,6 +21,62 @@ function getTodos(req, res) {
         }
     });
 }
+function getTodoById(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const todoId = req.params.id;
+            const todo = yield todoService.getById(todoId);
+            res.json(todo);
+        }
+        catch (err) {
+            logger.error('Failed to get todo', err);
+            res.status(500).send({ err: 'Failed to get todo' });
+        }
+    });
+}
+function addTodo(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const todo = req.body;
+            const addedTodo = yield todoService.add(todo);
+            res.json(addedTodo);
+        }
+        catch (err) {
+            logger.error('Failed to add todo', err);
+            res.status(500).send({ err: 'Failed to add todo' });
+        }
+    });
+}
+function updateTodo(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const todo = req.body;
+            const updatedTodo = yield todoService.update(todo);
+            res.json(updatedTodo);
+        }
+        catch (err) {
+            logger.error('Failed to update todo', err);
+            res.status(500).send({ err: 'Failed to update todo' });
+        }
+    });
+}
+function removeTodo(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const todoId = req.params.id;
+            const removedId = yield todoService.remove(todoId);
+            res.send(removedId);
+        }
+        catch (err) {
+            logger.error('Failed to remove todo', err);
+            res.status(500).send({ err: 'Failed to remove todo' });
+        }
+    });
+}
 module.exports = {
-    getTodos
+    getTodos,
+    getTodoById,
+    addTodo,
+    updateTodo,
+    removeTodo
 };
